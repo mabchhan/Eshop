@@ -1,4 +1,4 @@
-const notfound = (req, res, next) => {
+const notFound = (req, res, next) => {
   const error = new Error(`Not Found - ${req.originalUrl}`);
   res.status(404); // Set status to 404
   next(error); // Pass error to next middleware
@@ -20,4 +20,4 @@ const errorHandler = (err, req, res, next) => {
   });
 };
 
-export { notfound, errorHandler };
+export { notFound, errorHandler };

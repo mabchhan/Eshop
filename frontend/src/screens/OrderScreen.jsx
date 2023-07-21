@@ -89,11 +89,11 @@ const OrderScreen = () => {
     toast.error(err.message);
   }
 
-  async function onApproveTest() {
-    await payOrder({ orderId, details: { payer: {} } });
-    refetch();
-    toast.success("Payment Successfully");
-  }
+  // async function onApproveTest() {
+  //   await payOrder({ orderId, details: { payer: {} } });
+  //   refetch();
+  //   toast.success("Payment Successfully");
+  // }
 
   const deliverOrderHandler = async () => {
     try {

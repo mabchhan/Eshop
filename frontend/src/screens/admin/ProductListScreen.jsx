@@ -7,14 +7,28 @@ import Loader from "../../components/Loader";
 import {
   useGetProductsQuery,
   useCreateProductMutation,
+  useDeleteProductMutation,
 } from "../../slices/productApiSlice";
 import { toast } from "react-toastify";
 
 const ProductListScreen = () => {
   const { data: products, isLoading, error, refetch } = useGetProductsQuery();
+
   const [createProduct, { isLoading: loadingCreateProduct }] =
     useCreateProductMutation();
-  const deleteHandler = (id) => () => {
+
+  const [deleteProduct, { isLoading: loadingDelete }] =
+    useDeleteProductMutation();
+
+  const deleteHandler = async (id) => {
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      try {
+        await deleteProduct(id);
+        refetch();
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
+    }
     console.log(id);
   };
 
@@ -28,6 +42,7 @@ const ProductListScreen = () => {
       }
     }
   };
+
   return (
     <>
       <Row className="align-items-center">
@@ -42,6 +57,7 @@ const ProductListScreen = () => {
       </Row>
 
       {loadingCreateProduct && <Loader />}
+      {loadingDelete && <Loader />}
 
       {isLoading ? (
         <Loader />
@@ -77,7 +93,7 @@ const ProductListScreen = () => {
                     <Button
                       variant="danger"
                       className="btn-sm"
-                      onClick={deleteHandler(product._id)}
+                      onClick={() => deleteHandler(product._id)}
                     >
                       <FaTrash style={{ color: "white" }} />
                     </Button>

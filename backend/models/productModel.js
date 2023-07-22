@@ -53,6 +53,7 @@ const productSchema = new mongoose.Schema(
       required: true,
       default: 0,
     },
+    reviews: [reviewSchema],
     rating: {
       type: Number,
       required: true,
